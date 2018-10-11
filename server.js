@@ -8,7 +8,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 
-
+/************
+ * DATABASE *
+ ************/
+// require models folder will import everythings from index.js which index.js centralize other models
+const db = require('./models');
 
 
 // ROUTES

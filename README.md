@@ -19,4 +19,5 @@ put resource.html into views.
 create models folder.
 
 3)
-start to do model
+start to do model.
+seed file.
