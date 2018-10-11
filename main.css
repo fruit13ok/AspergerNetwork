@@ -1,0 +1,44 @@
+/* use during layout */
+body, header, main, nav, section, footer, div, article, p, h1, h2, h3{
+    border: .1em solid black;
+    box-sizing: border-box;
+}
+
+/* ******************************************** */
+
+.fa {
+    font-size: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fa-thumbs-up:hover {
+  color: darkgreen;
+}
+
+.fa-thumbs-down:hover {
+  color: darkred;
+}
+
+/* ******************************************** */
+
+.article-flex{
+    display: flex;
+}
+.div-rating{
+    flex: 1; 
+}
+.div-resource{
+    flex: 10;
+}
+
+/* ******************************************** */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    background-color: darkgray;
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="normalize.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#resourceModal">Resources</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#updateModal">Profile</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h4>Resources</h4>
+        <article class="article-flex">
+            <div class="div-rating">
+                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
+                <p>Rating: <span class="span-rating">14</span></p>
+                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
+            </div>
+            <div class="div-resource">
+                <p>Type: education</p>
+                <p>Body: Just practice talking for 4 hours none stop.</p>
+                <p>Location: CCSF</p>
+                <p>URL: www.ccsf.edu/asperger101</p>
+            </div>
+        </article>
+        <article class="article-flex">
+            <div class="div-rating">
+                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
+                <p>Rating: <span class="span-rating">9</span></p>
+                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
+            </div>
+            <div class="div-resource">
+                <p>Type: social event</p>
+                <p>Body: 5 miles dog walk.</p>
+                <p>Location: Ferry Building to Golden Gate bridge</p>
+                <p>URL: www.facebook.com/5mdogwalk</p>
+            </div>
+        </article>
+        <article class="article-flex">
+            <div class="div-rating">
+                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
+                <p>Rating: <span class="span-rating">7</span></p>
+                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
+            </div>
+            <div class="div-resource">
+                <p>Type: career</p>
+                <p>Body: Full stack web developer with asperger job fair.</p>
+                <p>Location: moscone center</p>
+                <p>URL: www.moscone.com/aspergerdevjob</p>
+            </div>
+        </article>
+    </main>
+    <section>
+        <!-- <h4>signup form</h4>
+        <form id="signup-form">
+            <input id="email-signup" name="email-signup" type="email" placeholder="E-mail">
+            <input id="password-signup" name="password-signup" type="password" placeholder="Password">
+            <button id="submit-signup-button" type="submit">Signup</button>
+        </form> -->
+        <!-- Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" 
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">signup form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signup-form">
+                            <input id="email-signup" name="email-signup" type="email" placeholder="E-mail">
+                            <input id="password-signup" name="password-signup" type="password" placeholder="Password">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="signup-form-close" data-dismiss="modal">Signup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" 
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">login form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="login-form">
+                            <input id="email-login" name="email-login" type="email" placeholder="E-mail">
+                            <input id="password-login" name="password-login" type="password" placeholder="Password">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="login-form-close" data-dismiss="modal">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <!-- <h4>User update form</h4>
+        <form id="update-form">
+            <input id="email-update" name="email-update" type="email" placeholder="E-mail">
+            <input id="password-update" name="password-update" type="password" placeholder="Password">
+            <button id="submit-update-button" type="submit">Update</button>
+        </form> -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" 
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">login form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="update-form">
+                            <input id="email-update" name="email-update" type="email" placeholder="E-mail">
+                            <input id="password-update" name="password-update" type="password" placeholder="Password">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="update-form-close" data-dismiss="modal">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" 
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Post resource form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="resource-form">
+                            <select id="resource-type" name="resource-type" form="resource-form">
+                                <option value="education">education</option>
+                                <option value="social event">social event</option>
+                                <option value="career">career</option>
+                                <option value="activity">activity</option>
+                                <option value="food">food</option>
+                                <option value="multiple type">multiple type</option>
+                            </select>
+                            <textarea id="resource-body" name="resource-body" placeholder="describe this resource" form="resource-form"></textarea>
+                            <input id="resource-location" name="resource-location" type="text" placeholder="resource location">
+                            <input id="resource-url" name="resource-url" type="text" placeholder="resource url">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="resource-form-close" data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>
