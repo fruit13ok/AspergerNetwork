@@ -1,21 +1,92 @@
-let totalRating = 0;
-// totalRating=parseInt($('.span-rating').text());
-
-$('main').on('click', '#thumbs-up', function(event){
-    event.preventDefault();
-    // let totalRating=parseInt($('.span-rating').text());
-    totalRating+=1;
-    console.log(totalRating);
-    // $('.span-rating').text(totalRating);
+$.ajax({
+    method: 'GET',
+    url: '/resource',
+    success: function (json) {
+        // console.log('loaded resource content status', json);
+        json.forEach(resource => {
+            console.log('loaded resource content status', resource);
+            let reso_id = resource.reso_id;
+            let _user = resource._user;
+            let _type = resource._type;
+            let body = resource.body;
+            let location = resource.location;
+            let url = resource.url;
+            let totalRating = resource.totalRating;
+            $('main').append(
+                `
+                <article class="article-flex">
+                    <div class="div-rating">
+                        <i id="thumbs-up" class="fa fa-thumbs-up"></i>
+                        <p>totalRating: <span class="span-rating">${totalRating}</span></p>
+                        <i id="thumbs-down" class="fa fa-thumbs-down"></i>
+                    </div>
+                    <div class="div-resource">
+                        <p>Type: ${_type}</p>
+                        <p>Body: ${body}</p>
+                        <p>Location: ${location}</p>
+                        <p>URL: ${url}</p>
+                    </div>
+                </article>
+                `
+            );
+        });
+        // // console.log('loaded resource content status', json);
+        // json.forEach(resource => {
+        //     let _id = resource._id;
+        //     // $.ajax({
+        //     //     method: 'GET',
+        //     //     url: '/rating',
+        //     //     success: function (json) {
+        //     //         console.log('loaded rating status', json);
+        //     //         // json.forEach(resource => {
+        //     //     }
+        //     // });
+        //     let _user = resource._user.email;
+        //     let _type = resource._type.name;
+        //     let body = resource.body;
+        //     let location = resource.location;
+        //     let url = resource.url;
+        //     $('main').append(
+        //         `
+        //         <article class="article-flex">
+        //             <div class="div-rating">
+        //                 <i id="thumbs-up" class="fa fa-thumbs-up"></i>
+        //                 <p>User: <span class="span-rating">${_user}</span></p>
+        //                 <i id="thumbs-down" class="fa fa-thumbs-down"></i>
+        //             </div>
+        //             <div class="div-resource">
+        //                 <p>Type: ${_type}</p>
+        //                 <p>Body: ${body}</p>
+        //                 <p>Location: ${location}</p>
+        //                 <p>URL: ${url}</p>
+        //             </div>
+        //         </article>
+        //         `
+        //     );
+        // })
+    },
+    error: function (e1, e2, e3) { console.log('ERROR ', e2) },
 });
 
-$('main').on('click', '#thumbs-down', function(event){
-    event.preventDefault();
-    // let totalRating=parseInt($('.span-rating').text());
-    totalRating-=1;
-    console.log(totalRating);
-    // $('.span-rating').text(totalRating);
-});
+
+// let totalRating = 0;
+// // totalRating=parseInt($('.span-rating').text());
+
+// $('main').on('click', '#thumbs-up', function(event){
+//     event.preventDefault();
+//     // let totalRating=parseInt($('.span-rating').text());
+//     totalRating+=1;
+//     console.log(totalRating);
+//     // $('.span-rating').text(totalRating);
+// });
+
+// $('main').on('click', '#thumbs-down', function(event){
+//     event.preventDefault();
+//     // let totalRating=parseInt($('.span-rating').text());
+//     totalRating-=1;
+//     console.log(totalRating);
+//     // $('.span-rating').text(totalRating);
+// });
 
 ///////////////////////////////////////////////////////////////////////////
 // https://www.youtube.com/watch?v=8zTL1LMxBqc
@@ -27,9 +98,6 @@ let deserialize = (serializedString) =>{
 }
 
 $('#signup-form-close').on('click', function(event){
-    // let email = $('#signupModal #email-signup').val().trim();
-    // let password = $('#signupModal #password-signup').val().trim();
-    // console.log(`email: ${email}, password: ${password}`);
     let serializedData = $('#signup-form').serialize();
     $.ajax({
         method: "POST",
@@ -41,9 +109,6 @@ $('#signup-form-close').on('click', function(event){
 });
 
 $('#login-form-close').on('click', function(event){
-    // let email = $('#loginModal #email-login').val().trim();
-    // let password = $('#loginModal #password-login').val().trim();
-    // console.log(`email: ${email}, password: ${password}`);
     let serializedData = $('#login-form').serialize();
     $.ajax({
         method: "POST",
@@ -54,9 +119,6 @@ $('#login-form-close').on('click', function(event){
       });
 });
 $('#update-form-close').on('click', function(event){
-    // let email = $('#updateModal #email-update').val().trim();
-    // let password = $('#updateModal #password-update').val().trim();
-    // console.log(`email: ${email}, password: ${password}`);
     let serializedData = $('#update-form').serialize();
     $.ajax({
         method: "POST",
@@ -67,11 +129,6 @@ $('#update-form-close').on('click', function(event){
       });
 });
 $('#resource-form-close').on('click', function(event){
-    // let type = $('#resourceModal #resource-type').val().trim();
-    // let body = $('#resourceModal #resource-body').val().trim();
-    // let location = $('#resourceModal #resource-location').val().trim();
-    // let url = $('#resourceModal #resource-url').val().trim();
-    // console.log(`type: ${type}, body: ${body}, location: ${location}, url: ${url}`);
     let serializedData = $('#resource-form').serialize();
     $.ajax({
         method: "POST",

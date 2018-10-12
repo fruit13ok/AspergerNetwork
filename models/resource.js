@@ -5,11 +5,15 @@ const ResourceSchema = new Schema({
     body: { type: String, required: true},
     location: { type: String},
     url: { type: String},
-    _type: [{
+    _type: {
         type: Schema.Types.ObjectId,
-        ref: 'Types'
-    }],
-    total_rating: { type: Number}
+        ref: 'Type'
+    },
+    _user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    totalRating: Number
 })
 
 const Resource = mongoose.model('Resource', ResourceSchema);

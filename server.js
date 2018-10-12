@@ -22,6 +22,56 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + '/views/resource.html');
 });
 
+let totalRating = 0;
+setTotalRating = (rating) => {
+    totalRating = rating;
+}
+// query all resources content route
+app.get("/resource", (request, response) => {
+    db.Resource.find({})
+    .populate('_type')
+    .populate('_user')
+    .sort({ totalRating: -1 })
+    .exec(
+        (err, foundResources) => {
+            if (err) {console.log(err);}
+            // response.json(foundResources);
+            let arr = [];
+            foundResources.forEach(resource => {
+                let reso_id = resource._id;
+                let _user = resource._user.email;
+                let _type = resource._type.name;
+                let body = resource.body;
+                let location = resource.location;
+                let url = resource.url;
+                let totalRating = resource.totalRating;
+                // db.Rating.find({_resource: reso_id})
+                // .populate('_user')
+                // .populate('_resource')
+                // .exec(
+                //     (err, foundRatings) => {
+                //         if (err) {console.log(err);}
+                //         var curRating = 0;
+                //         foundRatings.forEach(rating => {
+                //             if(rating.rating === true){
+                //                 console.log('true');
+                //                 curRating+=1;
+                //             }else{
+                //                 console.log('false');
+                //                 curRating-=1;
+                //             }
+                //         })
+                //         console.log(curRating);
+                //         setTotalRating(curRating);
+                //     }
+                // );
+                arr.push({totalRating:totalRating, reso_id:reso_id, _user:_user, _type:_type ,body:body, location:location, url:url});
+            })
+            response.json(arr);
+        }
+    );
+});
+
 // signup user route
 app.post("/signup", (request, response) => {
     let email = request.body['email-signup'];
