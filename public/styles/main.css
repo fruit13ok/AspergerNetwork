@@ -29,7 +29,7 @@ body, header, main, nav, section, footer, div, article, p, h1, h2, h3{
     flex: 1; 
 }
 .div-resource{
-    flex: 10;
+    flex: 6;
 }
 
 /* ******************************************** */
@@ -41,4 +41,11 @@ form {
 
 form button {
     background-color: darkgray;
+}
+
+header nav {
+    background-color:lightblue;
+}
+main {
+    padding-top: 70px;
 }

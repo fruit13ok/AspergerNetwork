@@ -21,7 +21,7 @@
 <body>
     <!-- navbar to pop up modal forms -->
     <header>
-        <nav class="navbar navbar-expand-md navbar-light">
+        <nav class="navbar fixed-top navbar-expand-md navbar-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,54 +30,16 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
                     <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
-                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#resourceModal">Resources</a>
-                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#updateModal">Profile</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#resourceModal">Post Resources</a>
+                    <!-- <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#updateModal">User Profile</a> -->
+                    <a id='aLogout' class="nav-item nav-link" href="#" >Log Out</a>
                 </div>
             </div>
         </nav>
     </header>
     <!-- main content area display posted resources -->
-    <h4>Resources</h4>
     <main>
-        <!-- <article class="article-flex">
-            <div class="div-rating">
-                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
-                <p>Rating: <span class="span-rating">14</span></p>
-                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
-            </div>
-            <div class="div-resource">
-                <p>Type: education</p>
-                <p>Body: Just practice talking for 4 hours none stop.</p>
-                <p>Location: CCSF</p>
-                <p>URL: www.ccsf.edu/asperger101</p>
-            </div>
-        </article>
-        <article class="article-flex">
-            <div class="div-rating">
-                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
-                <p>Rating: <span class="span-rating">9</span></p>
-                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
-            </div>
-            <div class="div-resource">
-                <p>Type: social event</p>
-                <p>Body: 5 miles dog walk.</p>
-                <p>Location: Ferry Building to Golden Gate bridge</p>
-                <p>URL: www.facebook.com/5mdogwalk</p>
-            </div>
-        </article>
-        <article class="article-flex">
-            <div class="div-rating">
-                <i id="thumbs-up" class="fa fa-thumbs-up"></i>
-                <p>Rating: <span class="span-rating">7</span></p>
-                <i id="thumbs-down" class="fa fa-thumbs-down"></i>
-            </div>
-            <div class="div-resource">
-                <p>Type: career</p>
-                <p>Body: Full stack web developer with asperger job fair.</p>
-                <p>Location: moscone center</p>
-                <p>URL: www.moscone.com/aspergerdevjob</p>
-            </div>
-        </article> -->
+
     </main>
     <!-- signup Modal for navbar update link -->
     <section>
@@ -98,7 +60,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="signup-form-close" data-dismiss="modal">Signup</button>
+                        <button type="button" class="btn btn-secondary" id="signup-form-close" data-dismiss="modal">Signup New User</button>
                     </div>
                 </div>
             </div>
@@ -123,14 +85,14 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="login-form-close" data-dismiss="modal">Login</button>
+                        <button type="button" class="btn btn-secondary" id="login-form-close" data-dismiss="modal">User Login</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- update Modal for navbar update link -->
-    <section>
+    <!-- <section>
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" 
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -148,12 +110,12 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="update-form-close" data-dismiss="modal">Update</button>
+                        <button type="button" class="btn btn-secondary" id="update-form-close" data-dismiss="modal">Update User</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- resource Modal for navbar update link -->
     <section>
         <div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" 
@@ -182,7 +144,40 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="resource-form-close" data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-secondary" id="resource-form-close" data-dismiss="modal">Post Resource</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="modal fade" id="updateResourceModal" tabindex="-1" role="dialog" 
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Post resource form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="update-resource-form">
+                            <select id="update-resource-type" name="update-resource-type" form="update-resource-form">
+                                <option value="education">education</option>
+                                <option value="social event">social event</option>
+                                <option value="career">career</option>
+                                <option value="activity">activity</option>
+                                <option value="food">food</option>
+                                <option value="multiple type">multiple type</option>
+                            </select>
+                            <textarea id="update-resource-body" name="update-resource-body" placeholder="describe this resource" form="update-resource-form"></textarea>
+                            <input id="update-resource-location" name="update-resource-location" type="text" placeholder="resource location">
+                            <input id="update-resource-url" name="update-resource-url" type="text" placeholder="resource url">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="update-resource-form-close" data-dismiss="modal">Post Resource</button>
                     </div>
                 </div>
             </div>
