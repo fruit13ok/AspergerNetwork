@@ -161,29 +161,10 @@ $('main').on('click', '#updateBtn', function (event) {
     $('#updateResourceModal #update-resource-url')
         .val($(this).parent().siblings('.div-resource').find('.rUrl').text());
 
-    // $('#update-resource-form-close').on('click', function (event) {
-    //     // console.log(user._id);
-    //     let serializedData = $('#update-resource-form').serialize();
-    //     console.log(serializedData);
-    //     console.log(serializedData + "&resource-id=" + reso_id);
-    //     $.ajax({
-    //         method: "POST",
-    //         url: "/updateResource",
-    //         data: serializedData + "&resource-id=" + reso_id,
-    //         beforeSend: function (xhr) {
-    //             xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);
-    //         },
-    //         error: function (e1, e2, e3) { console.log('ERROR ', e2) },
-    //         success: function (json) {
-    //             console.log('updated resource status', json);
-    //             window.location.reload()
-    //         }
-    //     });
-    // });
-    $('#update-resource-form-validate').on('click', function (event) {
+    $('#update-resource-form-validate-close').on('click', function (event) {
         event.preventDefault();
-        let nowAjax = false;
-        $('#update-resource-form input, #update-resource-form textarea').each(function(event){
+        let allowAjax = new Array( $('#update-resource-form input, #update-resource-form textarea').length );
+        $('#update-resource-form input, #update-resource-form textarea').each(function(index, event){
             if($(this).val() === ''){
                 if($(this).attr('type') === 'email'){
                     $(this).siblings().text("Please enter an email address.");
@@ -193,20 +174,23 @@ $('main').on('click', '#updateBtn', function (event) {
                     $(this).addClass('error');
                     $(this).siblings().fadeIn();
                 }
+                allowAjax[index] = false;
             }else{
                 if(!validateEmail($(this).val()) && $(this).attr('type') === 'email'){
                     $(this).addClass('error');
                     $(this).siblings().text("Please enter a valid email address.");
                     $(this).siblings().fadeIn();
+                    allowAjax[index] = false;
                 }else{
                     $(this).removeClass('error');
                     $(this).siblings('.error-message').hide();
-                    // $('#update-resource-form-close').prop('disabled', false);
-                    nowAjax = true;
+                    allowAjax[index] = true;
                 }
             }
         }); 
-        if(nowAjax === true){
+        if(allowAjax.every(x => x === true)){
+            // button start without data-dismiss="modal", if validated add attribute in
+            $('#update-resource-form-validate-close').attr('data-dismiss', 'modal');
             let serializedData = $('#update-resource-form').serialize();
             $.ajax({
                 method: "POST",
@@ -229,31 +213,10 @@ $('main').on('click', '#updateBtn', function (event) {
 // https://www.youtube.com/watch?v=8zTL1LMxBqc
 // https://getbootstrap.com/docs/4.1/components/modal/
 
-let deserialize = (serializedString) => {
-    serializedString = serializedString.replace(/\%20/g, ' ');
-    return serializedString.split("&");
-}
-
-// $('#signup-form-close').on('click', function (event) {
-//     let serializedData = $('#signup-form').serialize();
-//     $.ajax({
-//         method: "POST",
-//         url: "/signup",
-//         data: serializedData,
-//         error: function (e1, e2, e3) { console.log('ERROR ', e2) },
-//         success: function (json) {
-//             console.log('signed up status', json);
-//             user = { email: json.createdUser.email, _id: json.createdUser._id }
-//             localStorage.token = json.signedJwt;
-//             checkForLogin();
-//         }
-//     });
-// });
-
-$('#signup-form-validate').on('click', function (event) {
+$('#signup-form-validate-close').on('click', function (event) {
     event.preventDefault();
-    let nowAjax = false;
-    $('#signup-form input, #signup-form textarea').each(function(event){
+    let allowAjax = new Array( $('#signup-form input, #signup-form textarea').length );
+    $('#signup-form input, #signup-form textarea').each(function(index, event){
         if($(this).val() === ''){
             if($(this).attr('type') === 'email'){
                 $(this).siblings().text("Please enter an email address.");
@@ -263,20 +226,23 @@ $('#signup-form-validate').on('click', function (event) {
                 $(this).addClass('error');
                 $(this).siblings().fadeIn();
             }
+            allowAjax[index] = false;
         }else{
             if(!validateEmail($(this).val()) && $(this).attr('type') === 'email'){
                 $(this).addClass('error');
                 $(this).siblings().text("Please enter a valid email address.");
                 $(this).siblings().fadeIn();
+                allowAjax[index] = false;
             }else{
                 $(this).removeClass('error');
                 $(this).siblings('.error-message').hide();
-                // $('#signup-form-close').prop('disabled', false);
-                nowAjax = true;
+                allowAjax[index] = true;
             }
         }
     });   
-    if(nowAjax === true){
+    if(allowAjax.every(x => x === true)){
+        // button start without data-dismiss="modal", if validated add attribute in
+        $('#signup-form-validate-close').attr('data-dismiss', 'modal');
         let serializedData = $('#signup-form').serialize();
         $.ajax({
             method: "POST",
@@ -294,28 +260,10 @@ $('#signup-form-validate').on('click', function (event) {
     }
 });
 
-// $('#login-form-close').on('click', function (event) {
-//     let serializedData = $('#login-form').serialize();
-//     $.ajax({
-//         method: "POST",
-//         url: "/login",
-//         data: serializedData,
-//         error: function (e1, e2, e3) {
-//             console.log('ERROR ', e2);
-//             $('#checkUserModal').modal('show');
-//         },
-//         success: function (json) {
-//             console.log('logged in status', json);
-//             localStorage.token = json.token;
-//             checkForLogin();
-//         }
-//     });
-// });
-
-$('#login-form-validate').on('click', function (event) {
+$('#login-form-validate-close').on('click', function (event) {
     event.preventDefault();
-    let nowAjax = false;
-    $('#login-form input, #login-form textarea').each(function(event){
+    let allowAjax = new Array( $('#login-form input, #login-form textarea').length );
+    $('#login-form input, #login-form textarea').each(function(index, event){
         if($(this).val() === ''){
             if($(this).attr('type') === 'email'){
                 $(this).siblings().text("Please enter an email address.");
@@ -325,20 +273,23 @@ $('#login-form-validate').on('click', function (event) {
                 $(this).addClass('error');
                 $(this).siblings().fadeIn();
             }
+            allowAjax[index] = false;
         }else{
             if(!validateEmail($(this).val()) && $(this).attr('type') === 'email'){
                 $(this).addClass('error');
                 $(this).siblings().text("Please enter a valid email address.");
                 $(this).siblings().fadeIn();
+                allowAjax[index] = false;
             }else{
                 $(this).removeClass('error');
                 $(this).siblings('.error-message').hide();
-                // $('#login-form-close').prop('disabled', false);
-                nowAjax = true;
+                allowAjax[index] = true;
             }
         }
     }); 
-    if(nowAjax === true){
+    if(allowAjax.every(x => x === true)){
+        // button start without data-dismiss="modal", if validated add attribute in
+        $('#login-form-validate-close').attr('data-dismiss', 'modal');
         let serializedData = $('#login-form').serialize();
         $.ajax({
             method: "POST",
@@ -358,31 +309,10 @@ $('#login-form-validate').on('click', function (event) {
     }
 });
 
-// $('#resource-form-close').on('click', function (event) {
-//     console.log(user);
-//     console.log(user._id);
-//     let serializedData = $('#resource-form').serialize();
-//     console.log(serializedData);
-//     $.ajax({
-//         method: "POST",
-//         url: "/postResource",
-//         data: serializedData,
-//         beforeSend: function (xhr) {
-//             xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);
-//         },
-//         error: function (e1, e2, e3) { console.log('ERROR ', e2) },
-//         success: function (json) {
-//             console.log('posted resource status', json);
-//             $('main').append(oneResource(json._id, json.totalRating, user.email, json._type.name, json.body, json.location, json.url));
-//             window.location.reload()
-//         }
-//     });
-// });
-
-$('#resource-form-validate').on('click', function (event) {
+$('#resource-form-validate-close').on('click', function (event) {
     event.preventDefault();
-    let nowAjax = false;
-    $('#resource-form input, #resource-form textarea').each(function(event){
+    let allowAjax = new Array( $('#resource-form input, #resource-form textarea').length );
+    $('#resource-form input, #resource-form textarea').each(function(index, event){
         if($(this).val() === ''){
             if($(this).attr('type') === 'email'){
                 $(this).siblings().text("Please enter an email address.");
@@ -392,20 +322,23 @@ $('#resource-form-validate').on('click', function (event) {
                 $(this).addClass('error');
                 $(this).siblings().fadeIn();
             }
+            allowAjax[index] = false;
         }else{
             if(!validateEmail($(this).val()) && $(this).attr('type') === 'email'){
                 $(this).addClass('error');
                 $(this).siblings().text("Please enter a valid email address.");
                 $(this).siblings().fadeIn();
+                allowAjax[index] = false;
             }else{
                 $(this).removeClass('error');
                 $(this).siblings('.error-message').hide();
-                // $('#resource-form-close').prop('disabled', false);
-                nowAjax = true;
+                allowAjax[index] = true;
             }
         }
     });
-    if(nowAjax === true){
+    if(allowAjax.every(x => x === true)){
+        // button start without data-dismiss="modal", if validated add attribute in
+        $('#resource-form-validate-close').attr('data-dismiss', 'modal');
         let serializedData = $('#resource-form').serialize();
         $.ajax({
             method: "POST",
