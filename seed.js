@@ -8,6 +8,12 @@ let typeList = [
     {name: 'food'},
     {name: 'multiple type'}
 ]
+db.Type.create(typeList, 
+    (err, createdTypes) => {
+        if (err) {console.log(err);}
+        console.log('createdTypes: ', createdTypes);
+    }
+);
 
 // db.Type.create(typeList, 
 //     (err, createdTypes) => {
@@ -153,28 +159,28 @@ let typeList = [
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-db.Resource.find({})
-.populate('_type')
-.populate('_user')
-.sort({ totalRating: -1 })
-.exec(
-    (err, foundResources) => {
-        if (err) {console.log(err);}
-        let arr = [];
-        foundResources.forEach(resource => {
-            let reso_id = resource._id;
-            let _user = resource._user.email;
-            let _type = resource._type.name;
-            let body = resource.body;
-            let location = resource.location;
-            let url = resource.url;
-            let totalRating = resource.totalRating;
-            arr.push({totalRating:totalRating, reso_id:reso_id, _user:_user, _type:_type ,body:body, location:location, url:url});
-        })
-        console.log(arr);
-        process.exit();
-    }
-);
+// db.Resource.find({})
+// .populate('_type')
+// .populate('_user')
+// .sort({ totalRating: -1 })
+// .exec(
+//     (err, foundResources) => {
+//         if (err) {console.log(err);}
+//         let arr = [];
+//         foundResources.forEach(resource => {
+//             let reso_id = resource._id;
+//             let _user = resource._user.email;
+//             let _type = resource._type.name;
+//             let body = resource.body;
+//             let location = resource.location;
+//             let url = resource.url;
+//             let totalRating = resource.totalRating;
+//             arr.push({totalRating:totalRating, reso_id:reso_id, _user:_user, _type:_type ,body:body, location:location, url:url});
+//         })
+//         console.log(arr);
+//         process.exit();
+//     }
+// );
 
 // let totalRatingOut = 
 // db.Rating.find({_resource: '5bc00727e2a3f91b14d2b034'})
