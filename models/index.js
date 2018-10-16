@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/AspergerNetwork",  { useMongoClient: true });
+mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/AspergerNetwork");
 
 module.exports.User = require('./user.js');
 module.exports.Type = require('./type.js');
