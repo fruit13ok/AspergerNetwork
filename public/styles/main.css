@@ -1,8 +1,10 @@
 /* use during layout */
-body, header, main, nav, section, footer, div, article, p, h1, h2, h3{
+/* body, header, main, nav, section, footer, div, article, p, h1, h2, h3{
     border: .1em solid black;
     box-sizing: border-box;
-}
+} */
+
+/* http://colormind.io/ */
 
 /* ******************************************** */
 
@@ -24,12 +26,44 @@ body, header, main, nav, section, footer, div, article, p, h1, h2, h3{
 
 .article-flex{
     display: flex;
+    padding: 1rem;
 }
 .div-rating{
     flex: 1; 
+    background-color: #FBFCFB;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    /* justify-content: center; */
+    align-items: center;
 }
 .div-resource{
-    flex: 6;
+    flex: 5;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    background-color: #FBFCFB;
+}
+
+.div-resource p{
+    font-family: 'Raleway', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .02em;
+}
+
+.div-resource span{
+    font-family: 'Lato', sans-serif;
+	text-transform: none;
+	line-height: 1.4;
+}
+
+.div-editDelete {
+    flex: 1;
+    background-color: #FBFCFB;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    /* justify-content: center; */
+    align-items: center;
 }
 
 /* ******************************************** */
@@ -44,8 +78,47 @@ form button {
 }
 
 header nav {
-    background-color:lightblue;
+    background-color:#cbc085;
 }
 main {
     padding-top: 70px;
 }
+
+body {
+    background-color:#d5e5d7;
+}
+
+.mynav {
+    text-align: right;
+}
+
+.d4{
+    /* font-family: 'Lovers Quarrel', cursive; */
+    font-family: 'Butterfly Kids', cursive;
+	text-transform: uppercase;
+	letter-spacing: .02em;
+    font-size: 4rem;
+    text-align: center
+}
+
+
+
+.error {
+	border: 1px solid #ED5254;
+}
+
+.error-message {
+	/* margin: -8px 0 12px;
+    text-align: left; */
+    font-size: .7rem;
+    color: #ED5254;
+    display: none;
+}
+
+.form-group *{
+	width: 100%;
+}
+/* .form-group input,
+.form-group:last-of-type {
+	width: 100%;
+} */

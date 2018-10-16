@@ -114,12 +114,39 @@ app.post("/signup", (req, res) => {
                         // we now have a successful hashed password
                     } else {
                         // we are creating a User object with their email address and OUR hashed password
+
+                        // both version work
+
+                        // db.User.create({
+                        //     email: req.body['email-signup'],
+                        //     password: hash
+                        // }, (err, createdUser) => {
+                        //     console.log('createdUser: ',createdUser)
+                        //     // we send our new data back to user or whatever you want to do.
+                        //     // payload need to be the same
+                        //     console.log(createdUser._id)
+                        //     let token = jwt.sign(
+                        //         {
+                        //             email: createdUser.email,
+                        //             _id: createdUser._id
+                        //         },
+                        //         SECRETKEY)
+                        //     let decoded = jwt.verify(token, SECRETKEY);
+                        //     console.log("DECODED JWT: ", decoded )
+                        //         res.status(200).json({
+                        //             message: 'User Created',
+                        //             createdUser: createdUser,
+                        //             signedJwt: token
+                        //         })
+                        //     // send success back to user, along with a token.
+                        // })
+
+                        // { password: 0 } will make createdUser into array
                         db.User.create({
                             email: req.body['email-signup'],
                             password: hash
                         }, { password: 0 }, (err, createdUser) => {
                             console.log('createdUser: ',createdUser)
-                            // if(err){ return res.status(500).json({err})}
                             // we send our new data back to user or whatever you want to do.
                             createdUser = createdUser[0]
                             // payload need to be the same
@@ -136,6 +163,7 @@ app.post("/signup", (req, res) => {
                                 });
                             // send success back to user, along with a token.
                         })
+
                     }
                 })
             }
@@ -217,14 +245,6 @@ app.post("/login", (req, res) => {
             res.status(500).json({ err })
         })
 });
-
-// update user route
-// app.post("/userUpdate", (req, res) => {
-//     let email = req.body['email-update'];
-//     let password = req.body['password-update'];
-//     console.log(`updated user email: ${email}, password: ${password}`);
-//     res.json({ email: email, password: password });
-// });
 
 // post resource route
 app.post("/postResource", verifyToken, (req, res) => {
@@ -313,8 +333,6 @@ app.post("/updateResource", verifyToken, (req, res) => {
         }
     );
     
-    
-
     // db.Resource.deleteOne(
     //     { _id: req.body.dataId, _user: verified._id},
     //     (err, deletedResource) => {
@@ -324,8 +342,6 @@ app.post("/updateResource", verifyToken, (req, res) => {
     //     }
     // );
 });
-
-
 
 app.post('/verify', verifyToken, (req, res) => {
     let verified= jwt.verify(req.token, SECRETKEY);
@@ -362,6 +378,7 @@ app.post("/ratingUp", verifyToken, (req, res) => {
                         {new:true}, // you want to receive the new object
                         (err, updatedResource) => { // callback
                         if(err) { return console.log(err) }
+                        console.log('updatedResource: ',updatedResource);
                         res.json(updatedResource);
                     });
                 });
@@ -401,6 +418,7 @@ app.post("/ratingDown", verifyToken, (req, res) => {
                         {new:true}, // you want to receive the new object
                         (err, updatedResource) => { // callback
                         if(err) { return console.log(err) }
+                        console.log('updatedResource: ',updatedResource);
                         res.json(updatedResource);
                     });
                 });
