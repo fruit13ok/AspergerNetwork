@@ -4,7 +4,7 @@
   "description": "fullstack site for asperger",
   "main": "server.js",
   "engines": {
-    "npm": "10.7.0"
+    "node": "10.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
