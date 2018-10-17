@@ -166,6 +166,9 @@ seed, add user, add resource to heroku
 add search feature
 media query
 
+8)
+small fix,
+change heroku url
 
 
 
@@ -272,3 +275,6 @@ sofia@gmail.com
 waika@gmail.com
 yi@gmail.com
 
+
+
+aspergernetwork
