@@ -7,15 +7,27 @@ function validateEmail(Email) {
 }
 
 
-oneResource = (resoId, totalRating, user, type, body, location, url) => {
+oneResource = (resoId, totalRating, user, type, body, location, url, curUser) => {
+    // if no user login or current user don't have post resource, hide edit/delete buttons
+    // console.log('user post this: ',user);
+    // console.log('current user: ',curUser);
+    var buttonHTML;
+    if(curUser === undefined || user._id !== curUser._id){
+        buttonHTML = `<button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left hideIcon" hideIcon><i class="fas fa-edit"></i></button>
+        <button type="button" id="deleteBtn" class="btn btn-danger btn-sm pull-left hideIcon"><i class="fas fa-trash-alt"></i></button>`
+    }else{
+        buttonHTML = `<button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left"><i class="fas fa-edit"></i></button>
+        <button type="button" id="deleteBtn" class="btn btn-danger btn-sm pull-left"><i class="fas fa-trash-alt"></i></button>`
+    }
+    // change this because I pass in whole user object ${user.substring(0, user.lastIndexOf("@"))}
     var resourceHTML =
     `
-    <article class="article-flex">
+    <article class="article-flex" data-userid=${user._id}>
         <div class="div-rating" data-id=${resoId}>
             <p id="p-rating">Rating: ${totalRating}</p>
             <i id="thumbs-up" class="fa fa-thumbs-up"></i>
             <i id="thumbs-down" class="fa fa-thumbs-down"></i>
-            <p><i class="fas fa-user"></i> <span class="posted-by">${user.substring(0, user.lastIndexOf("@"))}</span></p>
+            <p><i class="fas fa-user"></i> <span class="posted-by">${user.email.substring(0, user.email.lastIndexOf("@"))}</span></p>
         </div>
         <div class="div-resource">
             <p>Description: </p>
@@ -28,8 +40,9 @@ oneResource = (resoId, totalRating, user, type, body, location, url) => {
             <span class="rUrl">${url}</span>
         </div>
         <div class="div-editDelete" data-id=${resoId}>
-            <button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left"><i class="fas fa-edit"></i></button>
-            <button type="button" id="deleteBtn" class="btn btn-danger btn-sm pull-left"><i class="fas fa-trash-alt"></i></button>
+            `
+            + buttonHTML +
+            `
         </div>
     </article>
     `;
@@ -49,6 +62,15 @@ checkForLogin = () => {
             console.log('check For Login: ', response)
             user = { email: response.email, _id: response._id }
             console.log("you can access variable user: ", user)
+            console.log('my user', user);
+            // start by hide resource / logout icon, after someone login, show it
+            // start by show signup / login icon, after someone login, hide it
+            if(user !== undefined){
+                $('#logoutLink').removeClass('hideIcon');
+                $('#resourceLink').removeClass('hideIcon');
+                $('#signupLink').addClass('hideIcon');
+                $('#loginLink').addClass('hideIcon');
+            }
         }).fail(function (err) {
             console.log('error: ', err);
         });
@@ -74,16 +96,17 @@ $.ajax({
     url: '/resource',
     success: function (json) {
         json.forEach(resource => {
-            // console.log('loaded resource content status', resource);
+            console.log('loaded resource content status', resource._user);
             let reso_id = resource.reso_id;
-            let _user = resource._user.email;
+            // let _user = resource._user.email;
+            let _user = resource._user;
             let _type = resource._type;
             let body = resource.body;
             let location = resource.location;
             let url = resource.url;
             let totalRating = resource.totalRating;
             // oneResource = (resoId, totalRating, user, type, body, location, url)
-            $('main').append(oneResource(reso_id, totalRating, _user, _type, body, location, url));
+            $('main').append(oneResource(reso_id, totalRating, _user, _type, body, location, url, user));
         });
     },
     error: function (e1, e2, e3) { console.log('ERROR ', e2) }
@@ -304,6 +327,7 @@ $('#login-form-validate-close').on('click', function (event) {
                 localStorage.token = json.token;
                 console.log('login checkForLogin');
                 checkForLogin();
+                window.location.reload()
             }
         });
     }
@@ -350,18 +374,20 @@ $('#resource-form-validate-close').on('click', function (event) {
             error: function (e1, e2, e3) { console.log('ERROR ', e2) },
             success: function (json) {
                 console.log('posted resource status', json);
-                $('main').append(oneResource(json._id, json.totalRating, user.email, json._type.name, json.body, json.location, json.url));
+                // $('main').append(oneResource(json._id, json.totalRating, user.email, json._type.name, json.body, json.location, json.url));
+                $('main').append(oneResource(json._id, json.totalRating, user, json._type.name, json.body, json.location, json.url, user));
                 window.location.reload()
             }
         });
     }
 });
 
-$('#aLogout').on('click', function handleLogout(event) {
+$('#logoutLink').on('click', function handleLogout(event) {
     event.preventDefault();
     console.log("LOGGED OUT")
     delete localStorage.token;
     user = null;
     console.log('logout checkForLogin');
     checkForLogin();
+    window.location.reload()
 });

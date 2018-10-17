@@ -53,7 +53,7 @@
 .div-resource span{
     font-family: 'Lato', sans-serif;
 	text-transform: none;
-	line-height: 1.4;
+	/* line-height: 1.4; */
 }
 
 .div-editDelete {
@@ -96,7 +96,7 @@ body {
     /* font-family: 'Lovers Quarrel', cursive; */
     font-family: 'Butterfly Kids', cursive;
 	text-transform: uppercase;
-	letter-spacing: .02em;
+	letter-spacing: .02rem;
     font-size: 4rem;
     text-align: center
 }
@@ -122,3 +122,25 @@ body {
 .form-group:last-of-type {
 	width: 100%;
 } */
+
+
+.hideIcon {
+    display: none;
+}
+
+@media only screen and (max-width: 800px) {
+	.article-flex{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+    }
+    .div-resource p{
+        display: none;
+    }
+    .div-resource{
+        flex: 5;
+        display: grid;
+        grid-template-columns: 1fr;
+        background-color: #FBFCFB;
+    }
+}
