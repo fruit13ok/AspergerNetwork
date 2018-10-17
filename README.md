@@ -1,7 +1,122 @@
 # AspergerNetwork
-fullstack site for asperger
+##### by Yi Liu
+Build an social network app for people with Asperger (Aspie).
+
+## Presentation
+
+### Motivation to build this project.
+- Asperger and their love one can find and share resources on this website.
+- People with asperger has impaired social interaction.
+- There are gap between normal people and people with asperger, so as normal social network.
+- AspergerNetwork can prove an asperger friendly place to share resource such as understand more about asperger, where to find local service, asperger group, local events
+
+### Demo of your project's core functionality.
+
+### Code snippet.
+Learn more about Mongodb/Mongoose improve the site.
+When doing rating, it reference both user and resource, so I can find rating with user id and resource id.
+Mongoose has property $inc to increase value.
+Mongoose can use RegExp to find data.
+```
+db.Rating.find({_user: verified._id, _resource: req.body.dataId})
+.exec(
+    (err, foundRating) => {
+        if (err) {console.log(err);}
+        if (foundRating.length === 0){
+            db.Rating.create( {
+                rating: true,
+                _user: verified._id,
+                _resource: req.body.dataId
+            }, (err, newRating) => {
+                if(err) { return console.log(err) }
+                db.Resource.findOneAndUpdate(
+                    { _id: req.body.dataId }, // search condition
+                    { $inc: { totalRating: -1 } }, // new content you want to update
+                    {new:true}, // you want to receive the new object
+                    (err, updatedResource) => { // callback
+                    if(err) { return console.log(err) }
+                    res.json(updatedResource);
+                });
+            });
+        }else{
+            res.status(409).json("You already rated this resource");
+        }
+    }
+);
+db.Resource.find({body: new RegExp('.*'+req.body.searchKey+'.*', "i")})
+.populate('_type')
+.populate('_user')
+.sort({ totalRating: -1 })
+.exec(
+    (err, foundResources) => {
+        if (err) { console.log(err); }
+        let arr = [];
+        foundResources.forEach(resource => {
+            let reso_id = resource._id;
+            let _user = resource._user;
+            let _type = resource._type.name;
+            let body = resource.body;
+            let location = resource.location;
+            let url = resource.url;
+            let totalRating = resource.totalRating;
+            arr.push({ totalRating: totalRating, reso_id: reso_id, _user: _user, _type: _type, body: body, location: location, url: url });
+        })
+        res.json(arr);
+    }
+);
+```
+
+### Shout-outs for your fellow classmates (WDI47)!
+This final project only have a week, seeing and asking other classmates project to get idea and how do certian thing is important. Teacher and TA are always there helping. It does look like a work envirnment. Thank you all.
+- Justin (teacher)
+- Dalton (TA)
+- Alan
+- Andrea
+- Francisco
+- Gino
+- Luke
+- Natalie
+- Raj
+- Sofia
+- Waika
+- Yi
+
+## Technologies Used
+- __Express__ routes.
+- __AJAX__ make request.
+- __jQuery__ change frontend.
+- __MongoDB mLab__ sotre data.
+- __Git Github__ version control.
+- __CSS__ styple.
+- __Bootstrap__ navbar, modal.
+- __Heroku__ host the site. [Heroku link](https://powerful-escarpment-97107.herokuapp.com/).
+
+## Existing Features
+- single page, use modal to get user input
+- Signup.
+- Login.
+![login landing page](/public/images/signupLogin.png)
+- Logout.
+- Verify jsonwebtoken (secret key is hidden in dotenv environment).
+- Authentication.
+- bcrypt password.
+- Use token store in browser header to check current user or no user.
+- Full CRUD on resources: show all when page load, show some on search, logged in user can create, update, and delete therir own.
+![fetch stock data display log](/public/images/postLogout.png)
+- Form vaildation.
+- Responsive dynamic web page.
+
+## Planned Features
+- Lack of asperger resource, find api, such as meetup api, google api, donation api, etc ...
+- Add image and other media.
+- Upgrade to use React.
 
 ## Work flows
+0)
+planing, https://docs.google.com/document/d/1FC-5kbA2ChUUb7J6VsRa8AhoqXEUNegl9qEVm6Cn0O0/edit?usp=sharing
+trello (ERD, suer story, wireframe, research), https://trello.com/b/ZmbRJn6L/aspergernetwork
+wireframe, https://docs.google.com/drawings/d/1CeF7tJ7yBKo9SupFYX0f3L9XDM6quFUkV9Fc_5jlwsk/edit?usp=sharing
+
 1)
 Created single basic static frontend resource page with navbar luanch modal forms, and main content area. modal forms are for signup, login, update user, post resource. main content area is for list of resource and click rating buttons.
 
@@ -54,8 +169,23 @@ media query
 
 
 
-//////////////////////////////////////////////////////////////////////////////
 
+### Online resource going to be seeds for database:
+- definition of adult Asperger
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2695286/
+https://www.kennethrobersonphd.com/what-are-the-main-characteristics-of-aspergers-syndrome-in-adults/
+- about the right job
+https://www.iidc.indiana.edu/pages/Choosing-the-Right-Job-for-People-with-Autism-or-Aspergers-Syndrome
+- find job
+https://www.disabledperson.com/our-mission
+- Asperger organization
+http://aascend-preview.dreamhosters.com/
+https://www.meetup.com/asperger/
+- a resource site
+https://www.sfautismsociety.org/for-higher-functioning-adults.html
+
+
+### some seeds I use, some are real data
 
 Full stack web developer with asperger job fair.
 career
