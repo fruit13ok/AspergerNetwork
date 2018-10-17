@@ -44,6 +44,14 @@ want a better error handling.
 work on frontend, change app.js will also need to change how to jquery, careful.
 remove seeded data, entered data using the site.
 
+7)
+form vaildation
+heroku
+seed, add user, add resource to heroku
+add search feature
+media query
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////
