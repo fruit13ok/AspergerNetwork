@@ -391,3 +391,39 @@ $('#logoutLink').on('click', function handleLogout(event) {
     checkForLogin();
     window.location.reload()
 });
+
+$('#searchInput').on('keyup', function() {
+    console.log(this.value);
+    $.ajax({
+        method: "POST",
+        url: "/findResource",
+        data: {searchKey: this.value},
+        error: function (e1, e2, e3) {
+            console.log('ERROR: ', e2);
+        },
+        success: function (json) {
+            console.log('search status: ', Array.isArray(json));
+            // window.location.reload()
+            if(json.length > 0){
+                $('main').empty();
+                console.log('search status has item: ', json);
+                json.forEach(resource => {
+                    console.log('loaded resource content status', resource._user);
+                    let reso_id = resource.reso_id;
+                    // let _user = resource._user.email;
+                    let _user = resource._user;
+                    let _type = resource._type;
+                    let body = resource.body;
+                    let location = resource.location;
+                    let url = resource.url;
+                    let totalRating = resource.totalRating;
+                    $('main').append(oneResource(reso_id, totalRating, _user, _type, body, location, url, user));
+                });
+            }else{
+                console.log('search status no item: ', json);
+                $('main').empty();
+            }
+            
+        }
+    });
+});

@@ -34,7 +34,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <h4>AspergerNetwork</h4>
+                <!-- <form id="searchForm" class=""> -->
+                    <!-- <input type="text" name="search-resource" placeholder="resource search" class=""> -->
+                    <!-- <input type="submit" value="Search" class=""> -->
+                <!-- </form> -->
                 <div class="navbar-nav ml-auto">
+                    <input type="text" id="searchInput" name="search-resource" placeholder="resource search" class="">
                     <a id="signupLink" class="nav-item nav-link" href="#" data-toggle="modal" data-target="#signupModal"><i class="fas fa-user-plus"></i> Sign Up</a>
                     <a id="loginLink" class="nav-item nav-link" href="#" data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Log In</a>
                     <a id="resourceLink" class="nav-item nav-link hideIcon" href="#" data-toggle="modal" data-target="#resourceModal"><i class="fas fa-folder-plus"></i> Post Resource</a>
@@ -71,7 +76,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="signup-form-validate-close">Validate Form</button>
+                        <button type="button" class="btn btn-primary" id="signup-form-validate-close">Signup</button>
                     </div>
                 </div>
             </div>
@@ -101,13 +106,13 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="login-form-validate-close">Validate Form</button>
+                        <button type="button" class="btn btn-primary" id="login-form-validate-close">Login</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- resource Modal for navbar update link -->
+    <!-- post resource Modal for navbar update link -->
     <section>
         <div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -143,12 +148,13 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="resource-form-validate-close" >Validate Form</button>
+                        <button type="button" class="btn btn-primary" id="resource-form-validate-close" >Post Resource</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- modal update resource -->
     <section>
         <div class="modal fade" id="updateResourceModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -185,12 +191,13 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="update-resource-form-validate-close">Validate Form</button>
+                        <button type="button" class="btn btn-primary" id="update-resource-form-validate-close">Update Resource</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- modal use like a popup error message -->
     <section>
         <div class="modal fade" id="checkUserModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">

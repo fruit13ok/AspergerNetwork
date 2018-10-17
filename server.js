@@ -429,6 +429,37 @@ app.post("/ratingDown", verifyToken, (req, res) => {
     );
 });
 
+// query match resources content route
+app.post("/findResource", (req, res) => {
+    console.log('.*'+req.body.searchKey+'.*');
+    
+    // db.Resource.find({body: /5/i})
+    db.Resource.find({body: new RegExp('.*'+req.body.searchKey+'.*', "i")})
+    .populate('_type')
+    .populate('_user')
+    .sort({ totalRating: -1 })
+    .exec(
+        (err, foundResources) => {
+            if (err) { console.log(err); }
+            // res.json(foundResources);
+            let arr = [];
+            foundResources.forEach(resource => {
+                console.log(resource);
+                
+                let reso_id = resource._id;
+                // let _user = resource._user.email;
+                let _user = resource._user;
+                let _type = resource._type.name;
+                let body = resource.body;
+                let location = resource.location;
+                let url = resource.url;
+                let totalRating = resource.totalRating;
+                arr.push({ totalRating: totalRating, reso_id: reso_id, _user: _user, _type: _type, body: body, location: location, url: url });
+            })
+            res.json(arr);
+        }
+    );
+});
 
 // SERVER START
 app.listen(process.env.PORT || 3000, () => {

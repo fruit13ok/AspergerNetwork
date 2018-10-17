@@ -97,6 +97,30 @@ n/a
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2695286/
 
 
+Sunday, October 21, 2018 San Francisco Adult Asperger Self Help Meetup (AASHM) Monthly Library Meetup
+social event
+Main San Francisco Public Library, Sycip 4th floor meeting room 100 Larkin St · San Francisco, CA
+https://www.meetup.com/asperger/events/255571849/
+
+
+In the Spotlight: Autism and the Media
+October 20, 2018
+AASCEND—the Autism Asperger Spectrum Coalition for Education Networking & Development—in partnership with SFSU's Autism Spectrum Studies Program presents its 10th conference on adult autism. Join us for a day of exploring the adult autistic world, with artists and presenters on and off the spectrum.
+social event
+Seven Hills Conference Center 800 Font Blvd San Francisco State University SF, CA 94132
+https://www.eventbrite.com/e/in-the-spotlight-tickets-48597499429?aff=ebdssbdestsearch
+
+
+Autism FAQ: “I think I have Aspergers. Where can I go for a diagnosis and support?
+education
+Autism Clinic at UCSF
+https://blog.sfgate.com/lshumaker/2012/06/24/autism-faq-i-think-i-have-aspergers-where-can-i-go-for-a-diagnose-and-support/
+
+27 Companies Who Hire Adults With Autism
+career
+n/a
+https://workology.com/companies-hiring-adults-with-autism/
+
 alan@gmail.com
 andrea@gmail.com
 dalton@gmail.com
