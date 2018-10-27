@@ -70,15 +70,15 @@ db.Resource.find({body: new RegExp('.*'+req.body.searchKey+'.*', "i")})
 This final project only have a week, seeing and asking other classmates project to get idea and how do certian thing is important. Teacher and TA are always there helping. It does look like a work envirnment. Thank you all.
 - Justin (teacher)
 - Dalton (TA)
-- Alan
-- Andrea
-- Francisco
-- Gino
-- Luke
-- Natalie
-- Raj
-- Sofia
-- Waika
+- Alan          https://github.com/aduncan12/
+- Andrea        https://github.com/aza024
+- Francisco     https://github.com/okikokim808
+- Gino          https://github.com/isseygino911
+- Luke          https://github.com/Cyrusluke925
+- Natalie       https://github.com/natalie-poulson
+- Raj           https://github.com/rmahal
+- Sofia         https://github.com/sofia-aguirre/
+- Waika         https://github.com/wongsitu
 - Yi
 
 ## Technologies Used
@@ -107,9 +107,22 @@ This final project only have a week, seeing and asking other classmates project 
 - Responsive dynamic web page.
 
 ## Planned Features
-- Lack of asperger resource, find api, such as meetup api, google api, donation api, etc ...
+### 
+- Find more asperger resource, find api, such as meetup api, google api, donation api, etc...
+- Expend my personal asperger network to get more resource.
+- Add comment to post
+- Add home page.
+- Add user profile page.
+- Add resource detial page.
 - Add image and other media.
+- Add donation.
+- Add chatroom.
+###
 - Upgrade to use React.
+- Add more filer options, sort, etc...
+- Add user who make the post relation to the resource (can be no relation)
+- Think about user expierance, what user will expact.
+
 
 ## Work flows
 0)
@@ -262,6 +275,12 @@ career
 n/a
 https://workology.com/companies-hiring-adults-with-autism/
 
+
+https://www.nami.org/
+Francisco's dad
+
+
+
 alan@gmail.com
 andrea@gmail.com
 dalton@gmail.com
@@ -278,3 +297,13 @@ yi@gmail.com
 
 
 aspergernetwork
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+moggose should be node express mogoose
+

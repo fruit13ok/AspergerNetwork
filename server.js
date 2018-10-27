@@ -13,7 +13,6 @@ const SECRETKEY = "waffles";
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-
 /************
  * DATABASE *
  ************/
@@ -22,7 +21,7 @@ const db = require('./models');
 
 // FORMAT OF TOKEN
 // Authorization: Bearer <access_token>
-// Verify Tokenj 
+// Verify Token
 verifyToken = (req, res, next) => {
     console.log("in verify...");
     // Get auth header value
@@ -38,7 +37,6 @@ verifyToken = (req, res, next) => {
       req.token = bearerToken;
       // Next middleware
       next();
-  
     } else {
       // Forbidden
       res.sendStatus(403);
@@ -52,10 +50,11 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + '/views/resource.html');
 });
 
-let totalRating = 0;
-setTotalRating = (rating) => {
-    totalRating = rating;
-}
+// let totalRating = 0;
+// setTotalRating = (rating) => {
+//     totalRating = rating;
+// }
+
 // query all resources content route
 app.get("/resource", (req, res) => {
     db.Resource.find({})
@@ -205,7 +204,6 @@ app.post("/login", (req, res) => {
                     console.log('error bcrypt: ',err); 
                     return res.status(500).json({ err });
                 }
-
                 // If match is true (their password matches our db password)
                 if (match) {
                     console.log("MATCH: ", match)
@@ -248,14 +246,6 @@ app.post("/login", (req, res) => {
 
 // post resource route
 app.post("/postResource", verifyToken, (req, res) => {
-    // let type = req.body['resource-type'];
-    // let body = req.body['resource-body'];
-    // let location = req.body['resource-location'];
-    // let url = req.body['resource-url'];
-    // console.log(`posted resource type: ${type}, body: ${body}, location: ${location}, url: ${url}`);
-    // res.json({ type: type, body: body, location: location, url: url });
-    console.log(req.token);
-    console.log(req.body);
     let verified= jwt.verify(req.token, SECRETKEY)
     console.log('verified user id: ',verified._id);
     db.Type.findOne({name: req.body['resource-type']})
@@ -283,11 +273,11 @@ app.post("/postResource", verifyToken, (req, res) => {
 });
 
 // delete resource route
-// it work, only own can delete resource
+// it work, only owner can delete resource
 // ask why my deleteOne filter not triger error message, how to make better frontend feed back message
+
+// /resource/:id/delete
 app.post("/deleteResource", verifyToken, (req, res) => {
-    console.log(req.token);
-    console.log(req.body.dataId);
     let verified= jwt.verify(req.token, SECRETKEY)
     db.Resource.deleteOne(
         { _id: req.body.dataId, _user: verified._id},
@@ -301,8 +291,6 @@ app.post("/deleteResource", verifyToken, (req, res) => {
 
 // update resource route
 app.post("/updateResource", verifyToken, (req, res) => {
-    console.log(req.token);
-    console.log(req.body);
     let verified= jwt.verify(req.token, SECRETKEY)
     db.User.findById(verified._id)
     .exec(
@@ -332,17 +320,9 @@ app.post("/updateResource", verifyToken, (req, res) => {
             );
         }
     );
-    
-    // db.Resource.deleteOne(
-    //     { _id: req.body.dataId, _user: verified._id},
-    //     (err, deletedResource) => {
-    //         if (err) { return res.status(400).json({ err: "error has occured" }) }
-    //         console.log('deletedResource', deletedResource);
-    //         res.json(deletedResource);
-    //     }
-    // );
 });
 
+// check for login
 app.post('/verify', verifyToken, (req, res) => {
     let verified= jwt.verify(req.token, SECRETKEY);
     console.log("verified: ", verified);
@@ -352,8 +332,6 @@ app.post('/verify', verifyToken, (req, res) => {
 // rating thumbs up route
 app.post("/ratingUp", verifyToken, (req, res) => {
     let verified= jwt.verify(req.token, SECRETKEY);
-    // console.log('thumbs up, resource id: ', req.body.dataId);
-    // console.log('thumbs up, user id: ', verified._id);
     db.Rating.find({_user: verified._id, _resource: req.body.dataId})
     .exec(
         (err, foundRating) => {
@@ -392,8 +370,6 @@ app.post("/ratingUp", verifyToken, (req, res) => {
 // rating thumbs down route
 app.post("/ratingDown", verifyToken, (req, res) => {
     let verified= jwt.verify(req.token, SECRETKEY);
-    // console.log('thumbs down, resource id: ', req.body.dataId);
-    // console.log('thumbs down, user id: ', verified._id);
     db.Rating.find({_user: verified._id, _resource: req.body.dataId})
     .exec(
         (err, foundRating) => {
@@ -431,8 +407,6 @@ app.post("/ratingDown", verifyToken, (req, res) => {
 
 // query match resources content route
 app.post("/findResource", (req, res) => {
-    console.log('.*'+req.body.searchKey+'.*');
-    
     // db.Resource.find({body: /5/i})
     db.Resource.find({body: new RegExp('.*'+req.body.searchKey+'.*', "i")})
     .populate('_type')
@@ -441,13 +415,10 @@ app.post("/findResource", (req, res) => {
     .exec(
         (err, foundResources) => {
             if (err) { console.log(err); }
-            // res.json(foundResources);
             let arr = [];
             foundResources.forEach(resource => {
                 console.log(resource);
-                
                 let reso_id = resource._id;
-                // let _user = resource._user.email;
                 let _user = resource._user;
                 let _type = resource._type.name;
                 let body = resource.body;

@@ -1,19 +1,22 @@
+// if no one log in, localStorage.token will be deleted
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
+// new signup user or verify logged in user
 let user;
 
+// check input is email format
 function validateEmail(Email) {
     var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return $.trim(Email).match(pattern) ? true : false;
 }
 
-
-oneResource = (resoId, totalRating, user, type, body, location, url, curUser) => {
-    // if no user login or current user don't have post resource, hide edit/delete buttons
-    // console.log('user post this: ',user);
-    // console.log('current user: ',curUser);
+// setup how a resource look in html code before create it,
+// this way is better than create a generic html first and use jquery to update later,
+// if no user login or current user don't have post resource, hide edit/delete buttons,
+// user is login user, resoUser is resource's user
+oneResource = (resoId, totalRating, user, type, body, location, url, resoUser) => {
     var buttonHTML;
-    if(curUser === undefined || user._id !== curUser._id){
-        buttonHTML = `<button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left hideIcon" hideIcon><i class="fas fa-edit"></i></button>
+    if(resoUser === undefined || user._id !== resoUser._id){
+        buttonHTML = `<button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left hideIcon"><i class="fas fa-edit"></i></button>
         <button type="button" id="deleteBtn" class="btn btn-danger btn-sm pull-left hideIcon"><i class="fas fa-trash-alt"></i></button>`
     }else{
         buttonHTML = `<button type="button" id="updateBtn" class="btn btn-warning btn-sm pull-left"><i class="fas fa-edit"></i></button>
@@ -49,9 +52,10 @@ oneResource = (resoId, totalRating, user, type, body, location, url, curUser) =>
     return resourceHTML;
 }
 
+// send localStorage.token to browser header, get the still login user data,
+// config what link to show on the page
 checkForLogin = () => {
     if (localStorage.length > 0) {
-        let jwt = localStorage.token
         $.ajax({
             type: "POST", //GET, POST, PUT
             url: '/verify',
@@ -80,17 +84,7 @@ checkForLogin = () => {
 console.log('initial checkForLogin');
 checkForLogin();
 
-handleLogout = (e) => {
-    e.preventDefault();
-    console.log("LOGGED OUT")
-    delete localStorage.token;
-    $('#yesToken').toggleClass('show');
-    $('#message').text('Goodbye!')
-    user = null;
-    console.log('handleLogout checkForLogin');
-    checkForLogin();
-}
-
+// initial by query all resource, append html
 $.ajax({
     method: 'GET',
     url: '/resource',
@@ -98,20 +92,20 @@ $.ajax({
         json.forEach(resource => {
             console.log('loaded resource content status', resource._user);
             let reso_id = resource.reso_id;
-            // let _user = resource._user.email;
             let _user = resource._user;
             let _type = resource._type;
             let body = resource.body;
             let location = resource.location;
             let url = resource.url;
             let totalRating = resource.totalRating;
-            // oneResource = (resoId, totalRating, user, type, body, location, url)
             $('main').append(oneResource(reso_id, totalRating, _user, _type, body, location, url, user));
         });
     },
     error: function (e1, e2, e3) { console.log('ERROR ', e2) }
 });
 
+// each user can only rate resouce 1 time, 
+// base on data id attribute which is resource id, to add rating for that resource
 $('main').on('click', '#thumbs-up', function (event) {
     event.preventDefault();
     console.log('clicked thumbs-up, resource id is: ', $(this).parent().attr('data-id'));
@@ -131,6 +125,8 @@ $('main').on('click', '#thumbs-up', function (event) {
     });
 });
 
+// each user can only rate resouce 1 time, 
+// base on data id attribute which is resource id, to reduce rating for that resource
 $('main').on('click', '#thumbs-down', function (event) {
     event.preventDefault();
     // console.log('clicked thumbs-down, resource id is: ', $(this).parent().attr('data-id'));
@@ -150,6 +146,8 @@ $('main').on('click', '#thumbs-down', function (event) {
     });
 });
 
+// click delete button, ajax backend to delete resource from database by data id attribute,
+// data id attribute which is resource id
 $('main').on('click', '#deleteBtn', function (event) {
     event.preventDefault();
     console.log('clicked deleteBtn, resource id is: ', $(this).parent().attr('data-id'));
@@ -168,11 +166,12 @@ $('main').on('click', '#deleteBtn', function (event) {
     });
 });
 
+// when update resource, prefill modal form base on the element I clicked, 
+// validate the form data, send form data to backend to update database
 $('main').on('click', '#updateBtn', function (event) {
     event.preventDefault();
     var reso_id = $(this).parent().attr('data-id');
     console.log('clicked updateBtn, resource id is: ', reso_id);
-    // console.log('testing: ',$('#updateResourceModal #resource-type').val());
     console.log('testType: ',$(this).parent().siblings('.div-resource').find('.rType').text());
     $('#updateResourceModal').modal('show');
     $('#updateResourceModal #update-resource-type')
@@ -283,6 +282,10 @@ $('#signup-form-validate-close').on('click', function (event) {
     }
 });
 
+// before ajax form login data to backend, validate the form data first,
+// allowAjax have the same length of form fields, valid field set one allowAjax true,
+// when all index value in allowAjax true, then do ajax, find user with decoded password,
+// assign new token and send back to frond end, store to localStorage.token
 $('#login-form-validate-close').on('click', function (event) {
     event.preventDefault();
     let allowAjax = new Array( $('#login-form input, #login-form textarea').length );
@@ -333,6 +336,9 @@ $('#login-form-validate-close').on('click', function (event) {
     }
 });
 
+// before ajax form new resource data to backend, validate the form data first,
+// allowAjax have the same length of form fields, valid field set one allowAjax true,
+// when all allowAjax index value true, do ajax, added resource, append resouce html
 $('#resource-form-validate-close').on('click', function (event) {
     event.preventDefault();
     let allowAjax = new Array( $('#resource-form input, #resource-form textarea').length );
@@ -374,14 +380,16 @@ $('#resource-form-validate-close').on('click', function (event) {
             error: function (e1, e2, e3) { console.log('ERROR ', e2) },
             success: function (json) {
                 console.log('posted resource status', json);
-                // $('main').append(oneResource(json._id, json.totalRating, user.email, json._type.name, json.body, json.location, json.url));
-                $('main').append(oneResource(json._id, json.totalRating, user, json._type.name, json.body, json.location, json.url, user));
+                $('main').append(oneResource(json._id, json.totalRating, user, json._type.name, json.body, json.location, json.url, json._user));
                 window.location.reload()
             }
         });
     }
 });
 
+// when click log out link, remove localStorage.token and user,
+// call checkForLogin() to hide / unhide navbar link (will not show console log),
+// window.location.reload() refresh the page
 $('#logoutLink').on('click', function handleLogout(event) {
     event.preventDefault();
     console.log("LOGGED OUT")
@@ -392,6 +400,8 @@ $('#logoutLink').on('click', function handleLogout(event) {
     window.location.reload()
 });
 
+// search for resource while typing in search box, 
+// each return resource result will empty out main tag, and reappend
 $('#searchInput').on('keyup', function() {
     console.log(this.value);
     $.ajax({
@@ -410,7 +420,6 @@ $('#searchInput').on('keyup', function() {
                 json.forEach(resource => {
                     console.log('loaded resource content status', resource._user);
                     let reso_id = resource.reso_id;
-                    // let _user = resource._user.email;
                     let _user = resource._user;
                     let _type = resource._type;
                     let body = resource.body;
@@ -423,7 +432,6 @@ $('#searchInput').on('keyup', function() {
                 console.log('search status no item: ', json);
                 $('main').empty();
             }
-            
         }
     });
 });
